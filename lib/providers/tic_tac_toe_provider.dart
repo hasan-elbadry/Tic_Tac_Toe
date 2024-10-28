@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 class TicTacToeProvider with ChangeNotifier {
   var list = ['', '', '', '', '', '', '', '', ''];
   bool isPlayer1 = true;
+  bool isWin = false;
   String winnerPlayer = '';
 
   void turn(int index) {
@@ -19,6 +20,7 @@ class TicTacToeProvider with ChangeNotifier {
   String? check() {
     for (int i = 0; i < 9; i += 3) {
       if (list[i] != '' && list[i] == list[i + 1] && list[i] == list[i + 2]) {
+        isWin = true;
         return list[i];
       }
     }
@@ -26,13 +28,16 @@ class TicTacToeProvider with ChangeNotifier {
     // Check columns
     for (int i = 0; i < 3; i++) {
       if (list[i] != '' && list[i] == list[i + 3] && list[i] == list[i + 6]) {
+        isWin = true;
         return list[i];
       }
     }
     if (list[0] != '' && list[0] == list[4] && list[0] == list[8]) {
+      isWin = true;
       return list[0];
     }
     if (list[2] != '' && list[2] == list[4] && list[2] == list[6]) {
+      isWin = true;
       return list[2];
     }
     return null;
@@ -56,6 +61,8 @@ class TicTacToeProvider with ChangeNotifier {
       list[i] = '';
     }
     isPlayer1 = true;
+    isWin = false;
+    winnerPlayer = '';
     notifyListeners();
   }
 }

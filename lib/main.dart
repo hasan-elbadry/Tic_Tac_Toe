@@ -10,7 +10,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -47,11 +46,11 @@ class TicTacToePage extends StatelessWidget {
             )),
           ),
           Expanded(
-            flex: 8,
+            flex: 4,
             child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3, mainAxisSpacing: 5, crossAxisSpacing: 5),
-              itemBuilder: (context, index) => Consumer<TicTacToeProvider>(
+              itemBuilder: (context, index) => Consumer(
                 builder: (context, TicTacToeProvider provider, child) =>
                     Container(
                   color: Colors.green,
@@ -60,8 +59,13 @@ class TicTacToePage extends StatelessWidget {
                   child: InkWell(
                     //al InkWell zy al GestureDetector bezabt bs alfr2 an GestureDetector mashaklha kter w haga mo2refa, laken deh a7san w mafhash mashakel
                     onTap: () {
-                      provider.turn(index);
-                      provider.win();
+                      if(!provider.isWin) {
+                        provider.turn(index);
+                        provider.win();
+                      }
+                      else {
+                        return;
+                      }
                     },
                     child: Center(
                         child: Text(
